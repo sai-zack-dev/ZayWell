@@ -11,14 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('stores', function (Blueprint $table) {
+        Schema::create('currencies', function (Blueprint $table) {
             $table->id();
+            $table->string('code', 3)->unique(); // e.g., USD, MMK
             $table->string('name');
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->string('avatar')->nullable();
+            $table->string('symbol');
+            $table->decimal('exchange_rate', 16, 8)->default(1); // relative to default
+            $table->boolean('is_default')->default(false);
             $table->timestamps();
         });
+        
     }
 
     /**
@@ -26,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('stores');
+        Schema::dropIfExists('currencies');
     }
 };
