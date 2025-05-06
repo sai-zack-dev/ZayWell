@@ -37,8 +37,14 @@ class AppServiceProvider extends ServiceProvider
                 'US' => 'USD',
                 default => 'USD'
             };
-        
-            $currency = Currency::where('code', $currencyCode)->first() ?? Currency::where('code', 'USD')->first();
+
+            $currency = Currency::where('code', $currencyCode)->first();
+
+            // If USD is also unavailable, create a default USD currency
+            if (!$currency) {
+                $currency = Currency::create(['code' => 'USD', 'name' => 'US Dollar',      'symbol' => '$',  'exchange_rate' => 1,     'is_default' => true]);
+            }
+
             session()->put('guest_currency', $currency);
         }
     }
