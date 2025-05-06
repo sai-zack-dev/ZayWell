@@ -37,8 +37,9 @@ class AppServiceProvider extends ServiceProvider
                 'US' => 'USD',
                 default => 'USD'
             };
-    
-            session()->put('guest_currency', Currency::where('code', $currencyCode)->first());
+        
+            $currency = Currency::where('code', $currencyCode)->first() ?? Currency::where('code', 'USD')->first();
+            session()->put('guest_currency', $currency);
         }
     }
 }
