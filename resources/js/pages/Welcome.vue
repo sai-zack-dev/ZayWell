@@ -1,20 +1,14 @@
-<script setup lang="ts">
+<script setup lang="js">
 import { Head, Link } from '@inertiajs/vue3';
 import Card from '@/components/ui/card/Card.vue'
 import CardTitle from '@/components/ui/card/CardTitle.vue'
 import CardContent from '@/components/ui/card/CardContent.vue'
 import CardDescription from '@/components/ui/card/CardDescription.vue'
 import { ShoppingCart } from 'lucide-vue-next';
-defineProps<{
-    products: Array<{
-        id: number
-        name: string
-        thumbnail: string
-        price: number
-        stock: number
-        currency: string
-    }>
-}>()
+
+defineProps({
+    products: Array,
+});
 </script>
 
 
