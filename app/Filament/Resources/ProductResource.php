@@ -45,16 +45,15 @@ class ProductResource extends Resource
                 ]),
                 FileUpload::make('thumbnail')
                     ->label('Main Thumbnail')
-                    ->directory('storage/products/thumbnails') // ✅ saves to storage/app/public/products/thumbnails
-                    ->disk('public')                  // ✅ uses the "public" disk
+                    ->directory('products/thumbnails') 
+                    ->disk('public')        
                     ->image()
                     ->imagePreviewHeight('100')
                     ->required(),
 
                 FileUpload::make('images')
                     ->label('Gallery Images')
-                    ->directory('storage/products/thumbnails') // ✅ saves to storage/app/public/products/thumbnails
-                    ->directory('/products/images')     // ✅ separate folder for multiple images
+                    ->directory('/products/images')    
                     ->disk('public')
                     ->image()
                     ->imagePreviewHeight('100')

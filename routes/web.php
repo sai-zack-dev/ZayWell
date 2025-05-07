@@ -2,10 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\ProductManagementController;
 
-Route::get('/', function () {
-    return Inertia::render('Welcome');
-})->name('home');
+Route::get('/', [ProductManagementController::class, 'index'])->name('home');
 
 Route::get('dashboard', function () {
     return Inertia::render('Dashboard');
