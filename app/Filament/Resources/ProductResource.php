@@ -53,7 +53,7 @@ class ProductResource extends Resource
 
                 FileUpload::make('images')
                     ->label('Gallery Images')
-                    ->directory('/products/images')    
+                    ->directory('products/images')    
                     ->disk('public')
                     ->image()
                     ->imagePreviewHeight('100')

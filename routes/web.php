@@ -5,6 +5,7 @@ use Inertia\Inertia;
 use App\Http\Controllers\ProductManagementController;
 
 Route::get('/', [ProductManagementController::class, 'index'])->name('home');
+Route::get('/products/{product}', [ProductManagementController::class, 'show'])->name('products.show');
 
 Route::get('dashboard', function () {
     return Inertia::render('Dashboard');

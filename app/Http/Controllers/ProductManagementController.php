@@ -29,4 +29,23 @@ class ProductManagementController extends Controller
             'products' => $products,
         ]);
     }
+
+    public function show(Product $product)
+    {
+        $product->load('store', 'currency'); // if you have these relationships
+
+        return Inertia::render('Product', [
+            'product' => [
+                'id' => $product->id,
+                'name' => $product->name,
+                'description' => $product->description,
+                'thumbnail' => $product->thumbnail,
+                'images' => $product->images,
+                'price' => $product->getConvertedPriceAttribute(),
+                'stock' => $product->stock,
+                'currency' => auth()->user()->currency_id ?? $product->currency->symbol,
+            ]
+        ]);
+    }
+
 }
