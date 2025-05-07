@@ -18,4 +18,7 @@ Route::middleware('auth')->group(function () {
     Route::get('settings/appearance', function () {
         return Inertia::render('settings/Appearance');
     })->name('appearance');
+
+    Route::get('settings/currency', [ProfileController::class, 'editCurrency'])->name('profile.edit.currency');
+    Route::patch('settings/currency', [ProfileController::class, 'updateCurrency'])->name('profile.update.currency');
 });

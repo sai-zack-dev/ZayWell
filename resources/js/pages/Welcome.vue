@@ -33,7 +33,7 @@ defineProps<{
             <!-- Logo + Title -->
             <div class="flex items-center gap-2">
                 <!-- <img src="/logo.svg" alt="Brand Logo" class="w-8 h-8" /> -->
-                <h1 class="text-xl font-bold">ZayWell</h1>
+                <h1 class="text-xl font-bold">Zay Well</h1>
             </div>
 
             <!-- Auth Buttons -->

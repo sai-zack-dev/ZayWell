@@ -60,4 +60,23 @@ class ProfileController extends Controller
 
         return redirect('/');
     }
+
+    public function editCurrency(Request $request): Response
+    {
+        $currencyId =  auth()->user()->currency_id ?? session()->get('guest_currency')->id;
+        return Inertia::render('settings/Currency', [
+            'initialCurrencyId' => $currencyId,
+        ]);
+    }
+    public function updateCurrency(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'currency_id' => 'required|exists:currencies,id',
+        ]);
+        $request->user()->update([
+            'currency_id' => $request->currency_id,
+        ]);
+    
+        return to_route('profile.edit.currency');
+    }
 }
