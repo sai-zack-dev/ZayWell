@@ -1,14 +1,26 @@
-<script setup lang="js">
-import { Head, Link } from '@inertiajs/vue3';
+<script setup lang="ts">
+import { Head, Link, usePage } from '@inertiajs/vue3';
 import { ChevronLeft, ShoppingCart } from 'lucide-vue-next';
 
 defineProps({
   product: Object
 });
+interface PageProps {
+  auth: {
+    user: {
+      id: number;
+      name: string;
+      email: string;
+    } | null;
+  };
+  [key: string]: any; // Add index signature to satisfy the constraint
+}
+
+const page = usePage<PageProps>();
 </script>
 
 <template>
-    <Head :title="product.name" />
+    <Head :title="product?.name" />
     <header class="w-full p-5 fixed flex items-center justify-center top-0 z-10 
             bg-gray-200/20 dark:bg-gray-800/20 backdrop-blur-md shadow-xs">
         <div class="w-full max-w-7xl flex items-center justify-between">
@@ -19,8 +31,7 @@ defineProps({
             </div>
 
             <!-- Auth Buttons -->
-            <div class="flex items-center gap-4">
-                <Link v-if="$page.props.auth.user" :href="route('dashboard')"
+                <Link v-if="page.props.auth?.user" :href="route('dashboard')"
                     class="px-3 py-2 border rounded text-sm bg-gray-100 hover:bg-gray-200 dark:bg-gray-900 dark:hover:bg-gray-80 flex gap-3">
                     <ShoppingCart class="w-5 h-5" /> Cart
                 </Link>
@@ -32,22 +43,18 @@ defineProps({
                     </Link>
                 </template>
             </div>
-        </div>
     </header>
     <div class="w-full max-w-7xl mx-auto py-4 sm:py-6 mt-[78px]">
       <!-- Back -->
-      <Link
-        :href="route('home')"
-        class="inline-flex items-center text-sm text-gray-800 hover:underline mb-4"
-      >
-        <ChevronLeft /> Back
+      <Link :href="route('home')" class="inline-flex items-center text-sm text-gray-800 hover:underline mb-4">
+          <ChevronLeft /> Back
       </Link>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
         <!-- Gallery -->
         <div>
           <img
-            :src="product.thumbnail"
+            :src="product?.thumbnail"
             alt="Thumbnail"
             class="w-full aspect-square object-cover rounded-lg shadow"
           />
@@ -56,36 +63,36 @@ defineProps({
         <!-- Info -->
         <div>
           <h1 class="text-3xl font-semibold text-gray-900 dark:text-white">
-            {{ product.name }}
+            {{ product?.name }}
           </h1>
 
           <p class="mt-2 text-gray-500 dark:text-gray-300 text-sm">
-            {{ product.description || 'No description provided.' }}
+            {{ product?.description || 'No description provided.' }}
           </p>
 
           <div class="mt-6">
             <span class="text-2xl font-bold text-black dark:text-white">
-              {{ product.price }}
+              {{ product?.price }}
             </span>
             <!-- <span class="ml-1 text-lg text-gray-500 dark:text-gray-300">
-              {{ product.currency }}
+              {{ product?.currency }}
             </span> -->
           </div>
 
           <div class="mt-2">
             <span
               class="inline-block px-3 py-1 text-sm rounded-full"
-              :class="product.stock > 0 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'"
+              :class="product?.stock > 0 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'"
             >
-              {{ product.stock > 0 ? `${product.stock} in-stock` : 'Out of stock' }}
+              {{ product?.stock > 0 ? `${product?.stock} in-stock` : 'Out of stock' }}
             </span>
           </div>
           <div
             class="mt-5 grid grid-cols-3 gap-2"
-            v-if="product.images && product.images.length"
+            v-if="product?.images && product?.images.length"
           >
             <img
-              v-for="(img, index) in product.images"
+              v-for="(img, index) in product?.images"
               :key="index"
               :src="img"
               class="w-full h-24 object-cover rounded-md border"

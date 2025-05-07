@@ -16,7 +16,6 @@ class ProductSeeder extends Seeder
         $faker = Faker::create();
 
         $storeIds = Store::pluck('id')->toArray();
-        $currencyIds = Currency::pluck('id')->toArray();
 
         for ($i = 0; $i < 25; $i++) {
             $width = rand(300, 1080);
@@ -34,7 +33,7 @@ class ProductSeeder extends Seeder
                 ]),
                 'price' => $faker->randomFloat(2, 5, 500),
                 'stock' => $faker->numberBetween(0, 100),
-                'currency_id' => $faker->randomElement($currencyIds),
+                'currency_id' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

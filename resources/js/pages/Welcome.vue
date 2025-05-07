@@ -1,14 +1,30 @@
-<script setup lang="js">
+<script setup lang="ts">
 import { Head, Link } from '@inertiajs/vue3';
+import { PageProps } from '@inertiajs/core';
+
+declare const $page: PageProps & {
+    props: {
+        auth: {
+            user: any;
+        };
+    };
+};
 import Card from '@/components/ui/card/Card.vue'
 import CardTitle from '@/components/ui/card/CardTitle.vue'
 import CardContent from '@/components/ui/card/CardContent.vue'
 import CardDescription from '@/components/ui/card/CardDescription.vue'
 import { ShoppingCart } from 'lucide-vue-next';
 
-defineProps({
-    products: Array,
-});
+defineProps<{
+    products: Array<{
+        id: number;
+        name: string;
+        thumbnail: string;
+        stock: number;
+        currency: string;
+        price: number;
+    }>;
+}>();
 </script>
 
 
