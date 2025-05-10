@@ -11,7 +11,14 @@ class Product extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name', 'description', 'store_id', 'thumbnail', 'images', 'price', 'stock', 'currency_id'
+        'name',
+        'description',
+        'store_id',
+        'thumbnail',
+        'images',
+        'price',
+        'stock',
+        'currency_id'
     ];
 
     protected $casts = [
@@ -28,19 +35,23 @@ class Product extends Model
         return $this->belongsTo(Currency::class);
     }
 
-    public function getConvertedPriceAttribute(): string
+    public function getConvertedCurrencyPrice(): object
     {
         $store = auth()->user(); // assumes store panel
-
+        $guest_currency = session('guest_currency');
         $from = $this->currency; // product's original currency
-        $to = $store->currency ?? $from; // fallback to same if null
+        if ($store?->currency_id === $guest_currency->id) {
+            return (object) ['symbol' => $from->symbol, 'price' => number_format($this->price, 2)];
+        }
+        $to = $store->currency ?? $guest_currency;
 
         if (!$from || !$to || $from->exchange_rate == 0) {
-            return number_format($this->price, 2);
+            return (object) ['symbol' => $from->symbol, 'price' => number_format($this->price, 2)];
+
         }
 
         $converted = ($this->price / $from->exchange_rate) * $to->exchange_rate;
-        return $to->symbol . ' ' . number_format($converted, 2);
+        return (object) ['symbol' => $to->symbol, 'price' => number_format($converted, 2)];
     }
 
 }

@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import { Head, Link } from '@inertiajs/vue3';
 import { PageProps } from '@inertiajs/core';
+import Card from '@/components/ui/card/Card.vue'
+import CardTitle from '@/components/ui/card/CardTitle.vue'
+import CardContent from '@/components/ui/card/CardContent.vue'
+import CardDescription from '@/components/ui/card/CardDescription.vue'
+import { ShoppingCart } from 'lucide-vue-next';
 
 declare const $page: PageProps & {
     props: {
@@ -9,11 +14,6 @@ declare const $page: PageProps & {
         };
     };
 };
-import Card from '@/components/ui/card/Card.vue'
-import CardTitle from '@/components/ui/card/CardTitle.vue'
-import CardContent from '@/components/ui/card/CardContent.vue'
-import CardDescription from '@/components/ui/card/CardDescription.vue'
-import { ShoppingCart } from 'lucide-vue-next';
 
 defineProps<{
     products: Array<{
@@ -62,7 +62,6 @@ defineProps<{
     <div
         class="flex min-h-screen flex-col items-center bg-[#FAFAFA] p-4 sm:p-6 text-[#1b1b18] dark:bg-[#121212] mt-[78px]">
         <main class="w-full max-w-7xl grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6">
-
             <Link v-for="product in products" :key="product.id" :href="route('products.show', product.id)" class="block transition-transform hover:scale-[1.05] focus:outline-none">
                 <Card class="pt-0 pb-4 sm:pb-6 rounded-lg sm:rounded-xl gap-3 cursor-pointer">
                     <img :src="product.thumbnail" alt="Product" class="aspect-square object-cover rounded-t-lg" />
