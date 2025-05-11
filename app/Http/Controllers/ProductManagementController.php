@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Cart;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 
 
 class ProductManagementController extends Controller
@@ -49,5 +51,4 @@ class ProductManagementController extends Controller
             ]
         ]);
     }
-
 }

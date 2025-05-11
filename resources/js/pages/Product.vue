@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { Head, Link, usePage } from '@inertiajs/vue3';
+import { Head, Link, usePage, router } from '@inertiajs/vue3';
 import { ChevronLeft, ShoppingCart } from 'lucide-vue-next';
-
 const props = defineProps<{
   product: {
+    id: number;
     name: string;
     description: string;
     thumbnail: string;
@@ -45,11 +45,13 @@ const decrementCounter = () => {
   }
 };
 
-// Handle Add to Cart functionality (Placeholder for now)
 const addToCart = () => {
-  console.log(`Added ${counter.value} of ${product?.name} to the cart.`);
-  // Add logic to add to cart here
+  router.post('/cart', {
+    product_id: product.id,
+    quantity: counter.value,
+  });
 };
+
 </script>
 
 <template>

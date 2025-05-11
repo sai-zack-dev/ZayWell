@@ -54,5 +54,11 @@ class Product extends Model
         return (object) ['symbol' => $to->symbol, 'price' => number_format($converted, 2)];
     }
 
+    public function carts()
+    {
+        return $this->hasMany(Cart::class);
+    }
+
+
 }
 
