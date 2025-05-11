@@ -67,7 +67,7 @@ const addToCart = () => {
 
       <!-- Auth Buttons -->
       <div class="flex items-center gap-4">
-        <Link v-if="page.props.auth?.user" :href="route('dashboard')"
+        <Link v-if="page.props.auth?.user" :href="route('cart.index')"
           class="px-3 py-2 border rounded text-sm bg-gray-100 hover:bg-gray-200 dark:bg-gray-900 dark:hover:bg-gray-80 flex gap-3">
         <ShoppingCart class="w-5 h-5" /> Cart
         </Link>
