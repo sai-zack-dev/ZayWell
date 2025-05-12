@@ -31,21 +31,28 @@ class CartController extends Controller
             Session::forget('cart');
         }
 
-        $cartItems = Cart::with('product')->where('user_id', Auth::id())->get()->map(function ($item) {
-            $converted = $item->product->getConvertedCurrencyPrice();
-            return [
-                'cart_id' => $item->id,
-                'product' => $item->product,
-                'currency' => $converted->symbol,
-                'price' => $converted->price,
-                'quantity' => $item->quantity,
-            ];
-        });
+        $user = Auth::user();
+
+        $cartItems = collect();
+
+        if ($user && $user->cartItems()->exists()) {
+            $cartItems = $user->cartItems()->with('product')->get()->filter(fn($item) => $item->product)->map(function ($item) {
+                $converted = $item->product->getConvertedCurrencyPrice();
+                return [
+                    'cart_id' => $item->id,
+                    'product' => $item->product,
+                    'currency' => $converted->symbol,
+                    'price' => $converted->price,
+                    'quantity' => $item->quantity,
+                ];
+            });
+        }
 
         return Inertia::render('Cart', [
             'cartItems' => $cartItems,
         ]);
     }
+
 
 
     /**
@@ -79,7 +86,7 @@ class CartController extends Controller
             );
 
             // return redirect()->back()->with('success', 'Product added to your cart!');
-            return redirect('cart')->with('success', 'Product added to your cart!');
+            return redirect('cart.index')->with('success', 'Product added to your cart!');
         } else {
             // Guest: Save in session
             $cart = Session::get('cart', []);
